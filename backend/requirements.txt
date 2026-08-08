@@ -1,6 +1,8 @@
 fastapi
 uvicorn
 pydantic>=2.9.0
-huggingface-hub
 python-dotenv
+python-multipart
+google-genai
+huggingface-hub
 pytest

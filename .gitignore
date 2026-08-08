@@ -1,10 +1,21 @@
+# Global
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+dist/
+build/
+*.log
+
+# Backend specific
 backend/venv/
 backend/.env
 backend/__pycache__/
 backend/.pytest_cache/
-*.pyc
 
-# Frontend
+# Frontend specific
 frontend/node_modules/
 frontend/dist/
 frontend/.env
