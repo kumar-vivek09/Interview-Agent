@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Send, Settings, User, CheckCircle2, Circle, AlertCircle } from 'lucide-react';
 import mockCandidates from '../../backend/data/candidates.json';
 
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
 export default function App() {
   const [sessionId] = useState(() => 'sess-' + Math.random().toString(36).substring(2, 9));
@@ -13,6 +13,7 @@ export default function App() {
   const [feedback, setFeedback] = useState<any>(null);
   const [debugMode, setDebugMode] = useState(false);
   const [lastDebug, setLastDebug] = useState<any>(null);
+  const [currentScore, setCurrentScore] = useState<number | null>(null);
 
   const endRef = useRef<HTMLDivElement>(null);
 
@@ -60,6 +61,9 @@ export default function App() {
       
       if (data.debug_decision) {
         setLastDebug(data.debug_decision);
+      }
+      if (data.score !== undefined) {
+        setCurrentScore(data.score);
       }
       if (data.done) {
         setFeedback(data.feedback);
@@ -206,6 +210,16 @@ export default function App() {
               <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Education</h3>
               <p className="text-gray-300">B.Tech Computer Science</p>
             </div>
+            {currentScore !== null && (
+              <div className="pt-4 border-t border-gray-800">
+                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Live Score</h3>
+                <div className="flex items-center space-x-2">
+                  <div className={`text-3xl font-bold ${currentScore >= 80 ? 'text-green-400' : currentScore >= 60 ? 'text-yellow-400' : 'text-red-400'}`}>
+                    {currentScore}%
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div className="animate-fade-in">
